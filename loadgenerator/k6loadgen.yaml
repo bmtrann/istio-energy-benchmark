@@ -1,0 +1,53 @@
+---
+apiVersion: k6.io/v1alpha1
+kind: TestRun
+metadata:
+  name: loadgen
+  namespace: k6
+spec:
+  parallelism: 1
+  quiet: "false"
+  arguments: -o experimental-prometheus-rw
+  # cleanup: "post"
+  runner:
+    env:
+      - name: K6_WEB_DASHBOARD
+        value: "true"
+      # - name: K6_PROMETHEUS_RW_SERVER_URL
+      #   value: "http://prometheus:9090/api/v1/write"
+      - name: K6_PROMETHEUS_RW_SERVER_URL
+        value: "http://prometheus.default.svc.cluster.local:9090/api/v1/write"
+      - name: K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM
+        value: "true"
+      - name: TARGET_HOST
+        value: "http://frontend-proxy.default.svc.cluster.local:8080"
+      - name: AGENT_ENDPOINT
+        value: "agent.default.svc.cluster.local"
+      - name: FLAGD_HOST
+        value: "flagd.default.svc.cluster.local"
+    tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "loadgen"
+        effect: "NoSchedule"
+    nodeSelector:
+      kubernetes.io/hostname: worker-1
+    volumeMounts:
+      - name: test-data
+        mountPath: /test-data
+    volumes:
+      - name: test-data
+        configMap:
+          name: loadgen-script
+  initializer:
+    volumeMounts:
+      - name: test-data
+        mountPath: /test-data
+    volumes:
+      - name: test-data
+        configMap:
+          name: loadgen-script
+  script:
+    configMap:
+      name: 'loadgen-script'
+      file: 'oteldemo-loadgen.js'
