@@ -90,8 +90,8 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "histogram_quantile(0.50, sum(rate(k6_http_req_waiting_seconds[$__rate_interval])) by (le))",
-                        "legendFormat": "Latency p(50)",
+                        "expr": "histogram_quantile(0.95, sum(rate(k6_http_req_waiting_seconds[$__rate_interval])) by (le))",
+                        "legendFormat": "Latency p(95)",
                         "range": true
                       },
                       "version": "v0"
@@ -111,8 +111,8 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "histogram_quantile(0.95, sum(rate(k6_http_req_waiting_seconds[$__rate_interval])) by (le))",
-                        "legendFormat": "Latency p(95)",
+                        "expr": "histogram_quantile(0.99, sum(rate(k6_http_req_waiting_seconds[$__rate_interval])) by (le))",
+                        "legendFormat": "Latency p(99)",
                         "range": true
                       },
                       "version": "v0"
@@ -1186,10 +1186,10 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "2026-09-28T15:43:26.000Z",
+      "from": "now-5m",
       "hideTimepicker": false,
       "timezone": "browser",
-      "to": "2026-09-28T16:13:26.000Z"
+      "to": "now"
     },
     "title": "Kepler Energy v2",
     "variables": [

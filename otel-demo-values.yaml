@@ -283,7 +283,7 @@ components:
         value: service.criticality=low
     resources:
       limits:
-        memory: 8Gi
+        memory: 1Gi
     additionalVolumeMounts:
       - name: agent-fixtures
         mountPath: /app/fixtures/vcr_cassettes

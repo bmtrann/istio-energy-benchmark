@@ -6,26 +6,11 @@ import { SharedArray } from 'k6/data';
 export const options = {
   scenarios: {
     boutique_sweep: {
-      executor: 'ramping-arrival-rate',
-      startRate: 15,
-      timeUnit: '1s',
-      preAllocatedVUs: 15,
-      maxVUs: 400,  
-      stages: [
-        { target: 15,  duration: '5m' },
-        { target: 45,  duration: '5m' },
-        { target: 75,  duration: '5m' },
-        { target: 105, duration: '5m' },
-        { target: 135, duration: '5m' },
-        { target: 150, duration: '5m' },
-      ],
-    //   executor: 'constant-arrival-rate',
-    //   rate: 75,
+    //   executor: 'ramping-arrival-rate',
+    //   startRate: 15,
     //   timeUnit: '1s',
     //   preAllocatedVUs: 15,
-    //   maxVUs: 400,
-	//   duration: '30m',
-	//   gracefulStop: '30s'
+    //   maxVUs: 400,  
     //   stages: [
     //     { target: 15,  duration: '5m' },
     //     { target: 45,  duration: '5m' },
@@ -34,6 +19,13 @@ export const options = {
     //     { target: 135, duration: '5m' },
     //     { target: 150, duration: '5m' },
     //   ],
+      executor: 'constant-arrival-rate',
+      rate: 50,
+      timeUnit: '1s',
+      preAllocatedVUs: 15,
+      maxVUs: 400,
+	  duration: '30m',
+	  gracefulStop: '30s'
     },
   },
   // compute + report p50 alongside p95
