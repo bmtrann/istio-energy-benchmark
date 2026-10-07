@@ -1,21 +1,21 @@
 apiVersion: security.istio.io/v1
 kind: PeerAuthentication
 metadata:
-    name: default
-    namespace: istio-system
+  name: default
+  namespace: istio-system
 spec:
-    mtls:
+  mtls:
     mode: STRICT
 
 ---
 apiVersion: security.istio.io/v1
 kind: PeerAuthentication
 metadata:
-name: permissive-k6-runners
-namespace: default
+  name: permissive-k6-runners
+  namespace: default
 spec:
-selector:
+  selector:
     matchLabels:
-    runner: "true"
-mtls:
+      runner: "true"
+  mtls:
     mode: PERMISSIVE
